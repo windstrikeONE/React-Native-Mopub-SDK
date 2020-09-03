@@ -66,17 +66,18 @@ implementation('com.mopub:mopub-sdk:5.6.0@aar') {
 //    implementation 'com.google.android.gms:play-services-ads:17.1.2'
 //    implementation 'com.mopub.mediation:admob:17.1.2.4'
 
-//// Tapjoy
-    implementation 'com.tapjoy:tapjoy-android-sdk:12.2.0@aar'
-    implementation 'com.mopub.mediation:tapjoy:12.2.0.3'
-
-// AppLovin
-    implementation 'com.applovin:applovin-sdk:9.4.0'
-    implementation 'com.mopub.mediation:applovin:9.4.0.0'
-
+////// Tapjoy
+//    implementation 'com.tapjoy:tapjoy-android-sdk:12.2.0@aar'
+//    implementation 'com.mopub.mediation:tapjoy:12.2.0.3'
+//
+//// AppLovin
+//    implementation 'com.applovin:applovin-sdk:9.4.0'
+//    implementation 'com.mopub.mediation:applovin:9.4.0.0'
+//
+////
 // Vungle
-    implementation 'com.github.vungle:vungle-android-sdk:6.3.24'
-    implementation 'com.mopub.mediation:vungle:6.3.24.2'
+//    implementation 'com.github.vungle:vungle-android-sdk:6.3.24'
+//    implementation 'com.mopub.mediation:vungle:6.3.24.2'
 
 }
 
