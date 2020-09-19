@@ -59,8 +59,8 @@ implementation('com.mopub:mopub-sdk:5.6.0@aar') {
     }
 
 //    // AdColony
-    implementation 'com.adcolony:sdk:3.3.8'
-    implementation 'com.mopub.mediation:adcolony:3.3.8.1'
+    // implementation 'com.adcolony:sdk:3.3.8'
+    // implementation 'com.mopub.mediation:adcolony:3.3.8.1'
 
 // Google (AdMob)
 //    implementation 'com.google.android.gms:play-services-ads:17.1.2'
