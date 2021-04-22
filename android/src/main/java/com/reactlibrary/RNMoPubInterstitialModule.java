@@ -1,5 +1,7 @@
 package com.reactlibrary;
 
+import android.util.Log;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.Promise;
@@ -11,6 +13,8 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubInterstitial;
+
+import java.util.concurrent.Callable;
 
 import javax.annotation.Nullable;
 
@@ -28,6 +32,7 @@ public class RNMoPubInterstitialModule extends ReactContextBaseJavaModule implem
 
     private MoPubInterstitial mInterstitial;
     ReactApplicationContext mReactContext;
+    public String g_adUnitId;
 
     public RNMoPubInterstitialModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -40,13 +45,43 @@ public class RNMoPubInterstitialModule extends ReactContextBaseJavaModule implem
     }
 
     @ReactMethod
-    public void initializeInterstitialAd(String adUnitId) {
+    public void initializeInterstitialAd(final String adUnitId) {
+        final RNMoPubInterstitialModule that = this;
+        AdLibSDK.initializeAdSDK(null, new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                return actuallyInitializeInterstitial(adUnitId);
+            }
+        }, adUnitId, getCurrentActivity());
+    }
 
-        AdLibSDK.initializeAdSDK(null,adUnitId, getCurrentActivity());
+    @ReactMethod
+    public void initializeInterstitialAdAndLoad(final String adUnitId) {
+        final RNMoPubInterstitialModule that = this;
+        AdLibSDK.initializeAdSDK(null, new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                return actuallyInitializeInterstitial(adUnitId);
+            }
+        }, adUnitId, getCurrentActivity());
+    }
+
+
+    public Void actuallyInitializeInterstitial(String adUnitId) {
+        Log.d("mopub", "actually try to initialize interstitial with ad id: " + adUnitId);
         mInterstitial = new MoPubInterstitial(getCurrentActivity(), adUnitId);
         mInterstitial.setInterstitialAdListener(this);
-
+        mInterstitial.load();
+        return null;
     }
+
+//    public Callable<Void> actuallyInitializeInterstitial(){
+//        return Void call(){
+//
+//        }
+//        Log.d("mopub","actually try to initialize interstitial with ad id: "+adUnitId);
+//
+//    }
 
     @ReactMethod
     public void setKeywords(String keywords) {
@@ -65,6 +100,7 @@ public class RNMoPubInterstitialModule extends ReactContextBaseJavaModule implem
 
     @ReactMethod
     public void loadAd() {
+        Log.d("mopub", "NOW WE TRY TO LOAD THE INTERSTITIAL");
         if (mInterstitial != null) {
             mInterstitial.load();
         }
@@ -90,6 +126,7 @@ public class RNMoPubInterstitialModule extends ReactContextBaseJavaModule implem
 
     @Override
     public void onInterstitialLoaded(MoPubInterstitial interstitial) {
+        Log.d("mopub", "success interstitial loaded!");
         sendEvent(EVENT_LOADED, null);
     }
 
